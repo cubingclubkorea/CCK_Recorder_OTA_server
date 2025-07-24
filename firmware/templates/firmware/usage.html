@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="Mario76" />
+        <title>CCK Recorder</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Custom Google font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body class="d-flex flex-column h-100 bg-light">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="/"><span class="fw-bolder text-primary">CCK Recorder</span></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/usage">How to use?</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/list">Firmwares</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Instructions Section-->
+            <section class="py-5">
+                <div class="container px-5 mb-5">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">How to use?</span></h1>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-11 col-xl-9 col-xxl-8">
+                            <!-- Instruction 1-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">1. WiFi settings</h2>
+                                            <p>
+                                                - If WiFi is not connected, then WiFi named "CCK_Recorder_X" would be activated.<br>
+                                                - Connect to that WiFi, and WiFi setting page will be opened.<br>
+                                                - If not opened, go to browser and go to url "192.168.4.1"<br>
+                                                - Then, set the WiFi ssid and password!
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 2-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">2. Comp settings</h2>
+                                            <p>
+                                                - If progressing competition is only one, automatically set competition mode.<br>
+                                                - Button "OK": Go before competition<br>
+                                                - Button "+2": Go next competition<br>
+                                                - Button "DNF": Set that competition mode
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 3-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">3. Judge register</h2>
+                                            <p>
+                                                - When message "Wait for judge", just tag judge's card!<br>
+                                                - Be aware: If you don't have any account, you can't regist judge.<br>
+                                                - If you want to change judge, just press button "Judge chan"!
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 4-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">4. Player register</h2>
+                                            <p>
+                                                - When message "Wait for player", just tag player's card!<br>
+                                                - Then, device will display player's info, round, try count.<br>
+                                                - Button "OK": Go to inspection section<br>
+                                                - Button "Reset": Return to player register
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 5-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">5. Inspection/Running</h2>
+                                            <p>
+                                                - Just wait for player's timer start, automatically go to running section.<br>
+                                                - If inspection over 15s, penalty automatically added.<br>
+                                                - If inspection over 17s, automatically recorded as DNF.
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 6-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">6. Adjust record</h2>
+                                            <p>
+                                                - After solving, you can adjust record(such as penalty, DNF).<br>
+                                                - Button "OK": Go to upload section<br>
+                                                - Button "+2": Add penalty, could be duplicated<br>
+                                                - Button "DNF": Record ad DNF<br>
+                                                - Button "Reset": Revert timer's record
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Instruction 7-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <h2 class="fw-bolder">7. Upload record</h2>
+                                            <p>
+                                                - It needs player's confirm, just tag player's card!<br>
+                                                - After try 4 at Ao5, display will show BPA5, WPA5.<br>
+                                                - After complete round, display will show Single, Average.
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-white py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0">Copyright &copy; CubingClubKorea</div></div>
+                    <div class="col-auto">
+                        <a class="small" href="/contact">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </body>
+</html>
