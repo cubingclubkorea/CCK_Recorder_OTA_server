@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'CCK_Recorder_OTA_Server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
+        'NAME': 'cck_recorder',
         'USER' : '',
         'PASSWORD' : '',
         'HOST' : '127.0.0.1',

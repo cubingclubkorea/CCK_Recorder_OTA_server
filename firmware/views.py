@@ -10,5 +10,8 @@ def list(request):
     firmwareList=Firmware.objects.all()
     return render(request, 'firmware/list.html', {'firmwareList': firmwareList})
 
+def usage(request):
+    return render(request, 'firmware/usage.html')
 
-    
+def contact(request):
+    return render(request, 'firmware/contact.html')    
