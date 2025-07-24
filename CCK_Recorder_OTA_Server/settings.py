@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env=environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -26,7 +29,7 @@ SECRET_KEY = 'django-insecure-7pu)*$^^9f3#3@ouel*_o2y_7vv42$-xu=w0tzf)lc*szhkw$x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.9']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.9', 'localhost']
 
 
 # Application definition
@@ -79,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cck_recorder',
-        'USER' : '',
-        'PASSWORD' : '',
+        'USER' : env('DB_USER'),
+        'PASSWORD' : env('DB_PASS'),
         'HOST' : '127.0.0.1',
         'PORT' : '3306',
     }
