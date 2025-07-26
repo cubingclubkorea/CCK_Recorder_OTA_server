@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 import os
 
+# 요청사항 1 (CharField -> TextChoices)
+class RecorderType(models.TextChoices):
+    CCK_Recorder = 'CCK_Recorder', 'CCK Recorder'
+    KBG_Recorder = 'KBG_Recorder', 'KBG Recorder'
+    # 데이터상 이름과 표시이름 다르게
+
 def firmware_upload_path(instance, filename):
     base, ext = os.path.splitext(filename)
     version = f"v{instance.version_major}.{instance.version_minor}.{instance.version_patch}"
@@ -9,7 +15,11 @@ def firmware_upload_path(instance, filename):
     return f"firmwares/{new_filename}"
 
 class Firmware(models.Model):
-    name=models.CharField(max_length=100)
+    name=models.CharField(
+        max_length=20,
+        choices=RecorderType.choices,
+        default=RecorderType.CCK_Recorder,
+    )
     version_major=models.IntegerField(default=1)
     version_minor=models.IntegerField(default=1)
     version_patch=models.IntegerField(default=1)
@@ -27,7 +37,10 @@ class Firmware(models.Model):
 class Device(models.Model):
     device_id=models.CharField(max_length=20)
     device_password=models.CharField(max_length=512, )
-    device_type=models.CharField(max_length=20, blank=True)
+    device_type=models.CharField(
+        max_length=20,
+        choices=RecorderType.choices,
+        default=RecorderType.CCK_Recorder)
 
     def set_password(self, raw_password):
         self.device_password = make_password(raw_password)
