@@ -6,9 +6,10 @@ def firmware_upload_path(instance, filename):
     base, ext = os.path.splitext(filename)
     version = f"v{instance.version_major}.{instance.version_minor}.{instance.version_patch}"
     new_filename = f"{instance.name}_{version}{ext}"
-    return f"firmwares/{new_filename}"
+    return f"firmware/{new_filename}"
 
 class Firmware(models.Model):
+    id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=100)
     version_major=models.IntegerField(default=1)
     version_minor=models.IntegerField(default=1)
@@ -25,8 +26,8 @@ class Firmware(models.Model):
         return f"{self.name} v{self.version_major}.{self.version_minor}.{self.version_patch}"
 
 class Device(models.Model):
-    device_id=models.CharField(max_length=20)
-    device_password=models.CharField(max_length=512, )
+    device_id=models.CharField(max_length=20, primary_key=True)
+    device_password=models.CharField(max_length=512)
     device_type=models.CharField(max_length=20, blank=True)
 
     def set_password(self, raw_password):
@@ -40,3 +41,15 @@ class Device(models.Model):
         if not self.device_password.startswith('pbkdf2_'):
             self.device_password = make_password(self.device_password)
         super().save(*args, **kwargs)
+    
+    @property
+    def id(self):
+        return self.device_id
+    
+    @property
+    def is_active(self):
+        return True
+    
+    @property
+    def is_authenticated(self):
+        return True

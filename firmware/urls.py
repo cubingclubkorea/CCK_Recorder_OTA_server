@@ -6,10 +6,10 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('accounts/', include('django.contrib.auth.urls')),  # 추가!
+    path('accounts/', include('django.contrib.auth.urls')),
     path('list', views.list, name='list'),
     path('usage', views.usage, name='usage'),
     path('contact', views.contact, name='contact'),
-    path('latest/<str:name>/', views.latest_firmware, name='latest_firmware'),
-    path('download/<str:name>/', views.download_firmware, name='download_firmware'),
+    path('device/login', views.DeviceTokenView.as_view(), name='device_login'),
+    path('device/download', views.ProtectedFirmwareDownload.as_view(), name='download_firmware'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
