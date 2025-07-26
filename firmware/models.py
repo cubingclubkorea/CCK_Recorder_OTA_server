@@ -1,13 +1,20 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password, check_password
+import os
 
-# Create your models here.
+def firmware_upload_path(instance, filename):
+    base, ext = os.path.splitext(filename)
+    version = f"v{instance.version_major}.{instance.version_minor}.{instance.version_patch}"
+    new_filename = f"{instance.name}_{version}{ext}"
+    return f"firmwares/{new_filename}"
+
 class Firmware(models.Model):
     name=models.CharField(max_length=100)
     version_major=models.IntegerField(default=1)
     version_minor=models.IntegerField(default=1)
     version_patch=models.IntegerField(default=1)
     build_date=models.DateTimeField(auto_now_add=True)
-    file=models.FileField(upload_to='firmwares/')
+    file=models.FileField(upload_to=firmware_upload_path, blank=True)
     descriptor=models.TextField(blank=True)
 
     class Meta:
@@ -19,5 +26,17 @@ class Firmware(models.Model):
 
 class Device(models.Model):
     device_id=models.CharField(max_length=20)
-    device_password=models.CharField(max_length=50)
-    is_online=models.BooleanField()
+    device_password=models.CharField(max_length=512, )
+    device_type=models.CharField(max_length=20, blank=True)
+
+    def set_password(self, raw_password):
+        self.device_password = make_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.device_password)
+    
+    def save(self, *args, **kwargs):
+        # 이미 해시된 값인지 확인 후, 해시 처리하지 않는 안전장치
+        if not self.device_password.startswith('pbkdf2_'):
+            self.device_password = make_password(self.device_password)
+        super().save(*args, **kwargs)
