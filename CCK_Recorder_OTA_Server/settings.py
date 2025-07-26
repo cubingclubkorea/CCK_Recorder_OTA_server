@@ -28,7 +28,6 @@ SECRET_KEY = 'django-insecure-7pu)*$^^9f3#3@ouel*_o2y_7vv42$-xu=w0tzf)lc*szhkw$x
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.9', 'localhost']
 
 
@@ -59,7 +58,7 @@ ROOT_URLCONF = 'CCK_Recorder_OTA_Server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_URL_ROOT=[os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = BASE_DIR / "staticfiles"    # collectstatic 할 때 사용
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -135,3 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'firmware'
 MEDIA_URL='firmware/'
+
+LOGIN_REDIRECT_URL = '/'
