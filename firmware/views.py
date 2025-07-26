@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse, FileResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib.auth import authenticate
-from .models import Firmware, Device
+from .models import Firmware, Device, RecorderType
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -11,7 +11,7 @@ def index(request):
     return render(request, 'firmware/index.html')
 
 def list(request):
-    firmwareList=Firmware.objects.all()
+    firmwareList = Firmware.objects.all()
     return render(request, 'firmware/list.html', {'firmwareList': firmwareList})
 
 def usage(request):
