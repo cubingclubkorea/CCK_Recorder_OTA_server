@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Firmware, Device
+from .models import Firmware, Device, Contact
 
 # Register your models here.
 admin.site.register(Firmware)
@@ -8,6 +8,7 @@ admin.site.register(Firmware)
 admin.site.site_header="CCK Recorder Admin Page"
 admin.site.index_title="CCK Recorder"
 admin.site.site_title="Admin Page"
+admin.site.register(Contact) # 요청사항 3 (contact 데이터베이스 연동)
 
 class DeviceAdminForm(forms.ModelForm):
     device_password = forms.CharField(
