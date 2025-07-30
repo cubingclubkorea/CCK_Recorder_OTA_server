@@ -42,32 +42,91 @@
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-11 col-xl-9 col-xxl-8">
-                        <!-- Experience Section-->
-                         {% for list in firmwareList %}
-                        <section>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h2 class="text-primary fw-bolder mb-0">
-                                    V{{list.version_major}}.{{list.version_minor}}.{{list.version_patch}}
-                                </h2>
-                            </div>
-                            <!-- Experience Card 1-->
-                            <div class="card shadow border-0 rounded-4 mb-5">
-                                <div class="card-body p-5">
-                                    <div class="row align-items-center gx-5">
-                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                            <div class="bg-light p-4 rounded-4">
-                                                <div class="text-primary fw-bolder mb-2">Release Date</div>
-                                                <div class="small fw-bolder">{{list.build_date}}</div>
+                        <!-- 요청사항 2번 - CCK/KBG 탭 구분 메뉴 -->
+                        <ul class="nav nav-tabs mb-4" id="firmwareTab" role="tablist">
+                          <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="cck-tab" data-bs-toggle="tab" data-bs-target="#cck" type="button" role="tab" aria-controls="cck" aria-selected="true">CCK Recorder</button>
+                          </li>
+                          <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="kbg-tab" data-bs-toggle="tab" data-bs-target="#kbg" type="button" role="tab" aria-controls="kbg" aria-selected="false">KBG Recorder</button>
+                          </li>
+                        </ul>
+                        <div class="tab-content" id="firmwareTabContent">
+                          <div class="tab-pane fade show active" id="cck" role="tabpanel" aria-labelledby="cck-tab"> <!-- 탭이 CCK일경우-->
+                            {% for list in CCK_Firmware %} <!-- CCK 펌웨어 출력부분 -->
+                            <section>
+                                <div class="d-flex align-items-center justify-content-between mb-4"> <!-- 버전표시부분 -->
+                                    <h2 class="text-primary fw-bolder mb-0">
+                                        V{{list.version_major}}.{{list.version_minor}}.{{list.version_patch}}
+                                    </h2>
+                                </div>
+                                <div class="card shadow border-0 rounded-4 mb-5">
+                                    <div class="card-body p-5">
+                                        <div class="row align-items-center gx-5">
+                                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                                <div class="bg-light p-4 rounded-4">
+                                                    <div class="text-primary fw-bolder mb-2">Release Date</div>
+                                                    <div class="small fw-bolder">{{list.build_date}}</div>
+                                                </div>
                                             </div>
+                                            <div class="col-lg-8"><div> <!-- 내용표시부분 -->
+                                                {{list.descriptor}} <!-- 설명 -->
+                                            </div>
+                                            <div class="mt-2"> <!-- [추가구현] 파일 다운로드 부분 -->
+                                                {% if list.file %}
+                                                    <a href="{{ list.file.url }}" class="btn btn-outline-primary btn-sm" download>
+                                                        {{ list.file.name | cut:"firmwares/" }} 다운로드 <!-- 자동분류되는 파일이름에서 firmware/ 제거-->
+                                                    </a>
+                                                {% else %}
+                                                    <span class="text-muted">업로드된 파일 없음</span> <!-- 예외처리 -->
+                                                {% endif %}
                                         </div>
-                                        <div class="col-lg-8"><div>
-                                            {{list.descriptor}}
-                                        </div></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </section>
-                        {% endfor %}
+                            </section>
+                            {% empty %}
+                            <div>등록된 CCK Recorder 펌웨어가 없습니다.</div> <!-- 없을 경우 예외처리-->
+                            {% endfor %}
+                          </div>
+                          <div class="tab-pane fade" id="kbg" role="tabpanel" aria-labelledby="kbg-tab"> <!-- 탭이 KBG일경우 -->
+                            {% for list in KBG_Firmware %} <!-- KBG 펌웨어 출력부분-->
+                            <section>
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h2 class="text-primary fw-bolder mb-0">
+                                        V{{list.version_major}}.{{list.version_minor}}.{{list.version_patch}}
+                                    </h2>
+                                </div>
+                                <div class="card shadow border-0 rounded-4 mb-5">
+                                    <div class="card-body p-5">
+                                        <div class="row align-items-center gx-5">
+                                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                                <div class="bg-light p-4 rounded-4">
+                                                    <div class="text-primary fw-bolder mb-2">Release Date</div>
+                                                    <div class="small fw-bolder">{{list.build_date}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8"><div>
+                                                {{list.descriptor}}
+                                            </div>
+                                            <div class="mt-2"> <!-- [추가구현] 파일 다운로드 부분 -->
+                                                {% if list.file %}
+                                                    <a href="{{ list.file.url }}" class="btn btn-outline-primary btn-sm" download>
+                                                        {{ list.file.name|cut:"firmwares/" }} 다운로드
+                                                    </a>
+                                                {% else %}
+                                                    <span class="text-muted">업로드된 파일 없음</span>
+                                                {% endif %} 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            {% empty %}
+                            <div>등록된 KBG Recorder 펌웨어가 없습니다.</div> <!-- 없을 경우 예외처리-->
+                            {% endfor %}
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,8 +136,8 @@
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0">Copyright &copy; CubingClubKorea</div></div>
-                    <div class="col-auto">
-                        <a class="small" href="/contact">Contact</a>
+                    <div class="col-auto"> <!-- 텍스트를 버튼으로 변경-->
+                        <a class="btn btn-outline-primary btn-sm" href="/contact">Contact</a>
                     </div>
                 </div>
             </div>
