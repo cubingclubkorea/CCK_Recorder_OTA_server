@@ -1,4 +1,13 @@
-import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+
+import os
+from django.http import FileResponse
+from .jwt_auth import DeviceJWTAuthentication
 from django.shortcuts import render
 from django.http import JsonResponse, FileResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.contrib.auth import authenticate
@@ -29,62 +38,64 @@ def contact(request): # 요청사항 3 (contact 데이터베이스 연동)
         Contact.objects.create(name=name, email=email, message=message)
     return render(request, 'firmware/contact.html')
 
-@csrf_exempt
-def latest_firmware(request, name):
-    latest = (
-        Firmware.objects
-        .filter(name=name)
-        .order_by('-version_major', '-version_minor', '-version_patch', '-build_date')
-        .first()
-    )
+class DeviceTokenView(APIView):
+    def post(self, request):
+        device_id = request.data.get("device_id")
+        device_password = request.data.get("device_password")
 
-    if not latest:
-        return JsonResponse({'error': 'No firmware found.'}, status=204)
+        try:
+            device = Device.objects.get(device_id=device_id)
+        except Device.DoesNotExist:
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    data = {
-        'version': f"{latest.version_major}.{latest.version_minor}.{latest.version_patch}",
-    }
+        if not device.check_password(device_password):
+            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    return JsonResponse(data)
-
-@csrf_exempt
-def download_firmware(request, name):
-    if request.method != 'POST':
-        return JsonResponse({'error': 'Only POST allowed...'}, status=405)
-
-    try:
-        body = json.loads(request.body.decode('utf-8'))
-        device_id = body.get('device_id')
-        device_password = body.get('device_password')
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        return HttpResponseBadRequest('Failed to decode JSON body.')
-
-    if not device_id or not device_password:
-        return JsonResponse({'error': 'device_id, device_password가 필요합니다.'}, status=400)
-
-    try:
-        device = Device.objects.get(device_id=device_id)
-    except Device.DoesNotExist:
-        return HttpResponseForbidden()
-
-    if not device.check_password(device_password):
-        return HttpResponseForbidden()
-
-    try:
+        # JWT 발급
+        token = AccessToken.for_user(device)
+        token['device_id'] = device.device_id   # 커스텀 claim 추가
+            
         latest = (
             Firmware.objects
-            .filter(name=name)
+            .filter(name=device.device_type)
             .order_by('-version_major', '-version_minor', '-version_patch', '-build_date')
             .first()
         )
-
         if not latest:
-            return JsonResponse({'error': 'No firmware found.'}, status=204)
-    except Firmware.DoesNotExist:
-        return JsonResponse({'error': 'Firmware not exists'}, status=204)
+            return Response(
+                {
+                    "token": str(token),
+                    "latest_firmware": None
+                }
+            )
 
-    return FileResponse(
-        latest.file.open('rb'),
-        as_attachment=True,
-        filename=latest.file.name.split('/')[-1]
-    )
+        return Response(
+            {
+                "token": str(token),
+                "latest_firmware": f"{latest.version_major}.{latest.version_minor}.{latest.version_patch}"
+            }
+        )
+
+class ProtectedFirmwareDownload(APIView):
+    authentication_classes = [DeviceJWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        device = request.user  # <- Device 인스턴스
+        device_type = device.device_type
+        print(device)
+        # 해당 타입의 최신 펌웨어 가져오기
+        latest = (
+            Firmware.objects
+            .filter(name=device_type)
+            .order_by('-version_major', '-version_minor', '-version_patch', '-build_date')
+            .first()
+        )
+        if not latest:
+            return Response({"message": "no firmware exists"}, status=status.HTTP_204_NO_CONTENT)
+
+        firmware_path=latest.file.path
+        if not os.path.exists(firmware_path):
+            return Response({"message": "no firmware exists"}, status=status.HTTP_204_NO_CONTENT)
+    
+        return FileResponse(open(firmware_path, 'rb'), as_attachment=True, filename=os.path.basename(firmware_path))
