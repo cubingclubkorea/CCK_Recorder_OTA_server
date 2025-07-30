@@ -53,3 +53,11 @@ class Device(models.Model):
         if not self.device_password.startswith('pbkdf2_'):
             self.device_password = make_password(self.device_password)
         super().save(*args, **kwargs)
+
+class Contact(models.Model): # 요청사항 3 (contact 데이터베이스 연동)
+    name=models.CharField(max_length=100)
+    email=models.EmailField(max_length=100)
+    message=models.TextField()
+
+    def __str__(self):
+        return f"{self.name} ({self.email})" #어드민 페이지에서 '이름(이메일) 형식으로 표시되도록 변경
