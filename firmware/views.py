@@ -9,21 +9,33 @@ import os
 from django.http import FileResponse
 from .jwt_auth import DeviceJWTAuthentication
 from django.shortcuts import render
-from .models import Firmware, Device
+from django.http import JsonResponse, FileResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.contrib.auth import authenticate
+from .models import Firmware, Device, RecorderType, Contact
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
 def index(request):
     return render(request, 'firmware/index.html')
 
-def list(request):
-    firmwareList=Firmware.objects.all()
-    return render(request, 'firmware/list.html', {'firmwareList': firmwareList})
+def list(request): #요청사항 2 (list.html에서 CCK, KBG를 분리해서 출력하는 기능 구현) - view에서 각 단체별 펌웨어를 분리하여 return하도록 설계
+    CCK_Firmware = Firmware.objects.filter(name=RecorderType.CCK_Recorder)
+    KBG_Firmware = Firmware.objects.filter(name=RecorderType.KBG_Recorder)
+    return render(request, 'firmware/list.html', {
+        'CCK_Firmware': CCK_Firmware,
+        'KBG_Firmware': KBG_Firmware,
+    })
 
 def usage(request):
     return render(request, 'firmware/usage.html')
 
-def contact(request):
+def contact(request): # 요청사항 3 (contact 데이터베이스 연동)
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        Contact.objects.create(name=name, email=email, message=message)
     return render(request, 'firmware/contact.html')
 
 class DeviceTokenView(APIView):
