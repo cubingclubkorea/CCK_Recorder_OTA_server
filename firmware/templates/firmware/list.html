@@ -72,15 +72,6 @@
                                             <div class="col-lg-8"><div> <!-- 내용표시부분 -->
                                                 {{list.descriptor}} <!-- 설명 -->
                                             </div>
-                                            <div class="mt-2"> <!-- [추가구현] 파일 다운로드 부분 -->
-                                                {% if list.file %}
-                                                    <a href="{{ list.file.url }}" class="btn btn-outline-primary btn-sm" download>
-                                                        {{ list.file.name | cut:"firmwares/" }} 다운로드 <!-- 자동분류되는 파일이름에서 firmware/ 제거-->
-                                                    </a>
-                                                {% else %}
-                                                    <span class="text-muted">업로드된 파일 없음</span> <!-- 예외처리 -->
-                                                {% endif %}
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -108,15 +99,6 @@
                                             </div>
                                             <div class="col-lg-8"><div>
                                                 {{list.descriptor}}
-                                            </div>
-                                            <div class="mt-2"> <!-- [추가구현] 파일 다운로드 부분 -->
-                                                {% if list.file %}
-                                                    <a href="{{ list.file.url }}" class="btn btn-outline-primary btn-sm" download>
-                                                        {{ list.file.name|cut:"firmwares/" }} 다운로드
-                                                    </a>
-                                                {% else %}
-                                                    <span class="text-muted">업로드된 파일 없음</span>
-                                                {% endif %} 
                                             </div>
                                         </div>
                                     </div>

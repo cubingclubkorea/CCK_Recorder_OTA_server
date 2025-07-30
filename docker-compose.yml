@@ -1,0 +1,45 @@
+version: "3"
+
+volumes:
+  recorderDB:
+    external: true
+
+services:
+  database_recorder:
+    container_name: mysql_db_recorder
+    image: mysql/mysql-server:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cck_recorder
+      MYSQL_ROOT_PASSWORD: 'akfldh@7614'
+      MYSQL_USER: 'mario76'
+      MYSQL_PASSWORD: 'akfldh@7614'
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3308:3306"
+    volumes:
+      - recorderDB:/var/lib/mysql
+    command:
+      - "mysqld"
+      - "--default-authentication-plugin=mysql_native_password"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+      - "--skip-character-set-client-handshake"
+    networks:
+      - my_network
+  web_recorder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - database_recorder
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    external: true
