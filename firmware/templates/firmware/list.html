@@ -1,132 +1,53 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ko">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="Mario76" />
-        <title>CCK Recorder</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-        <!-- Custom Google font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-    </head>
-    <body class="d-flex flex-column h-100 bg-light">
-        <main class="flex-shrink-0">
-            <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
-                <div class="container px-5">
-                    <a class="navbar-brand" href="/"><span class="fw-bolder text-primary">CCK Recorder</span></a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/usage">How to use?</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/list">Firmwares</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!-- Page Content-->
-            <div class="container px-5 my-5">
-                <div class="text-center mb-5">
-                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Firmware List</span></h1>
-                </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-11 col-xl-9 col-xxl-8">
-                        <!-- 요청사항 2번 - CCK/KBG 탭 구분 메뉴 -->
-                        <ul class="nav nav-tabs mb-4" id="firmwareTab" role="tablist">
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="cck-tab" data-bs-toggle="tab" data-bs-target="#cck" type="button" role="tab" aria-controls="cck" aria-selected="true">CCK Recorder</button>
-                          </li>
-                          <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="kbg-tab" data-bs-toggle="tab" data-bs-target="#kbg" type="button" role="tab" aria-controls="kbg" aria-selected="false">KBG Recorder</button>
-                          </li>
-                        </ul>
-                        <div class="tab-content" id="firmwareTabContent">
-                          <div class="tab-pane fade show active" id="cck" role="tabpanel" aria-labelledby="cck-tab"> <!-- 탭이 CCK일경우-->
-                            {% for list in CCK_Firmware %} <!-- CCK 펌웨어 출력부분 -->
-                            <section>
-                                <div class="d-flex align-items-center justify-content-between mb-4"> <!-- 버전표시부분 -->
-                                    <h2 class="text-primary fw-bolder mb-0">
-                                        V{{list.version_major}}.{{list.version_minor}}.{{list.version_patch}}
-                                    </h2>
-                                </div>
-                                <div class="card shadow border-0 rounded-4 mb-5">
-                                    <div class="card-body p-5">
-                                        <div class="row align-items-center gx-5">
-                                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                                <div class="bg-light p-4 rounded-4">
-                                                    <div class="text-primary fw-bolder mb-2">Release Date</div>
-                                                    <div class="small fw-bolder">{{list.build_date}}</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8"><div> <!-- 내용표시부분 -->
-                                                {{list.descriptor}} <!-- 설명 -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            {% empty %}
-                            <div>등록된 CCK Recorder 펌웨어가 없습니다.</div> <!-- 없을 경우 예외처리-->
-                            {% endfor %}
-                          </div>
-                          <div class="tab-pane fade" id="kbg" role="tabpanel" aria-labelledby="kbg-tab"> <!-- 탭이 KBG일경우 -->
-                            {% for list in KBG_Firmware %} <!-- KBG 펌웨어 출력부분-->
-                            <section>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h2 class="text-primary fw-bolder mb-0">
-                                        V{{list.version_major}}.{{list.version_minor}}.{{list.version_patch}}
-                                    </h2>
-                                </div>
-                                <div class="card shadow border-0 rounded-4 mb-5">
-                                    <div class="card-body p-5">
-                                        <div class="row align-items-center gx-5">
-                                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                                <div class="bg-light p-4 rounded-4">
-                                                    <div class="text-primary fw-bolder mb-2">Release Date</div>
-                                                    <div class="small fw-bolder">{{list.build_date}}</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8"><div>
-                                                {{list.descriptor}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                            {% empty %}
-                            <div>등록된 KBG Recorder 펌웨어가 없습니다.</div> <!-- 없을 경우 예외처리-->
-                            {% endfor %}
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <!-- Footer-->
-        <footer class="bg-white py-4 mt-auto">
-            <div class="container px-5">
-                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; CubingClubKorea</div></div>
-                    <div class="col-auto"> <!-- 텍스트를 버튼으로 변경-->
-                        <a class="btn btn-outline-primary btn-sm" href="/contact">Contact</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="{% static 'js/scripts.js' %}"></script>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}CCK Recorder | Firmware{% endblock %}
+
+{% block content %}
+<section class="page-top">
+  <div class="container">
+    <h1>Firmware List</h1>
+    <p>Recorder 타입별 배포 이력을 분리해 확인할 수 있습니다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="tabs reveal">
+      <button class="tab-btn active" type="button" data-tab-target="cck">CCK Recorder</button>
+      <button class="tab-btn" type="button" data-tab-target="kbg">KBG Recorder</button>
+    </div>
+
+    <div class="tab-panel active" data-tab-panel="cck">
+      {% if CCK_Firmware %}
+      <div class="firmware-grid">
+        {% for item in CCK_Firmware %}
+        <article class="card firmware-item reveal">
+          <h3>v{{ item.version_major }}.{{ item.version_minor }}.{{ item.version_patch }}</h3>
+          <p class="meta">Release: {{ item.build_date|date:"Y-m-d H:i" }}</p>
+          <p>{{ item.descriptor|default:"설명 없음" }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-box">등록된 CCK Recorder 펌웨어가 없습니다.</div>
+      {% endif %}
+    </div>
+
+    <div class="tab-panel" data-tab-panel="kbg">
+      {% if KBG_Firmware %}
+      <div class="firmware-grid">
+        {% for item in KBG_Firmware %}
+        <article class="card firmware-item reveal">
+          <h3>v{{ item.version_major }}.{{ item.version_minor }}.{{ item.version_patch }}</h3>
+          <p class="meta">Release: {{ item.build_date|date:"Y-m-d H:i" }}</p>
+          <p>{{ item.descriptor|default:"설명 없음" }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-box">등록된 KBG Recorder 펌웨어가 없습니다.</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
