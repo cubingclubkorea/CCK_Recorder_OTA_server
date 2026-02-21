@@ -28,8 +28,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = 'django-insecure-7pu)*$^^9f3#3@ouel*_o2y_7vv42$-xu=w0tzf)lc*szhkw$x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=False)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+DEBUG = env.bool('DEBUG', default=True)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
 CSRF_TRUSTED_ORIGINS = ['https://recorder.cubingclub.com']
 
 # Application definition
@@ -96,16 +96,24 @@ WSGI_APPLICATION = 'CCK_Recorder_OTA_Server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cck_recorder',
-        'USER' : env('DB_USER'),
-        'PASSWORD' : env('DB_PASS'),
-        'HOST' : env('DB_HOST'),
-        'PORT' : '3306',
+if env.bool('USE_SQLITE', default=not bool(env('DB_HOST', default=''))):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': env('DB_NAME', default='cck_recorder'),
+            'USER': env('DB_USER', default='root'),
+            'PASSWORD': env('DB_PASS', default=''),
+            'HOST': env('DB_HOST'),
+            'PORT': env('DB_PORT', default='3306'),
+        }
+    }
 
 
 # Password validation
@@ -142,7 +150,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / "staticfiles"    # collectstatic 할 때 사용
 
@@ -152,6 +160,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"    # collectstatic 할 때 사용
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'file'
-MEDIA_URL='file/'
+MEDIA_URL='/file/'
 
 LOGIN_REDIRECT_URL = '/'
