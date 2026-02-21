@@ -5,46 +5,99 @@
 {% block content %}
 <section class="page-top">
   <div class="container">
-    <h1>Contact Us</h1>
-    <p>프로젝트 문의, 버그 리포트, 기능 제안은 아래 폼으로 전달해주세요.</p>
+    <h1>Contact</h1>
+    <p>버그 신고, 기술 사용 요청, 협업 제안을 유형별로 접수합니다. 문의 유형을 선택하면 관련 안내가 표시됩니다.</p>
   </div>
 </section>
 
 <section>
-  <div class="container contact-grid">
-    <article class="panel info-box reveal">
-      <h3>Support Guide</h3>
-      <p>응답 품질을 위해 아래 내용을 함께 보내주시면 처리 속도가 빨라집니다.</p>
-      <ul class="info-list">
-        <li>Recorder 타입 (CCK/KBG)</li>
-        <li>현재 펌웨어 버전</li>
-        <li>재현 절차 및 증상</li>
-        <li>발생 시각 / 대회 환경 정보</li>
-      </ul>
-    </article>
+  <div class="container">
+    <div class="inquiry-types reveal">
+      <button class="inquiry-btn active" type="button" data-type="bug">
+        <span class="inquiry-dot"></span>버그 리포트
+      </button>
+      <button class="inquiry-btn" type="button" data-type="usage">
+        <span class="inquiry-dot"></span>기술 사용 요청
+      </button>
+      <button class="inquiry-btn" type="button" data-type="collab">
+        <span class="inquiry-dot"></span>협업 제안
+      </button>
+    </div>
 
-    <article class="form-card reveal">
-      <form method="post">
-        {% csrf_token %}
-        <div class="form-row">
-          <label for="name">이름</label>
-          <input id="name" name="name" type="text" placeholder="홍길동" required />
-        </div>
-        <div class="form-row">
-          <label for="email">이메일</label>
-          <input id="email" name="email" type="email" placeholder="name@example.com" required />
-        </div>
-        <div class="form-row">
-          <label for="message">문의 내용</label>
-          <textarea id="message" name="message" placeholder="내용을 입력해주세요" required></textarea>
-        </div>
-        <button class="btn btn-primary" type="submit">문의 보내기</button>
-      </form>
+    <div class="contact-grid">
+      <div class="guide-panel reveal">
 
-      {% if submitted %}
-      <div class="alert">문의가 정상 접수되었습니다. 빠르게 확인 후 회신드리겠습니다.</div>
-      {% endif %}
-    </article>
+        <div class="guide-type-panel active" data-guide="bug">
+          <h3>버그 리포트</h3>
+          <p class="guide-desc">
+            오류를 정확히 재현하고 빠르게 수정하려면 아래 항목을 포함해주세요.
+            정보가 구체적일수록 처리 속도가 빨라집니다.
+          </p>
+          <ul class="guide-list">
+            <li>Recorder 타입 (CCK / KBG)</li>
+            <li>현재 펌웨어 버전 (Firmwares 페이지에서 확인)</li>
+            <li>오류 재현 순서 및 증상 설명</li>
+            <li>발생 시각 및 대회 환경 (종목, 스테이션 수 등)</li>
+            <li>가능하면 화면 사진 또는 영상 첨부 링크</li>
+          </ul>
+        </div>
+
+        <div class="guide-type-panel" data-guide="usage">
+          <h3>기술 사용 요청</h3>
+          <p class="guide-desc">
+            대회 또는 행사에서 CCK Recorder를 사용하고 싶으신 경우
+            아래 내용을 포함해 문의해주세요.
+          </p>
+          <ul class="guide-list">
+            <li>대회 / 행사 이름 및 예정 날짜</li>
+            <li>예상 사용 스테이션 수</li>
+            <li>주관 단체 (협회, 클럽, 학교 등)</li>
+            <li>현장 기술 지원 필요 여부</li>
+            <li>Wi-Fi 환경 구성 가능 여부</li>
+          </ul>
+        </div>
+
+        <div class="guide-type-panel" data-guide="collab">
+          <h3>협업 제안</h3>
+          <p class="guide-desc">
+            기술적 협업이나 파트너십을 제안하고 싶으신 경우
+            제안의 배경과 목표를 구체적으로 작성해주세요.
+          </p>
+          <ul class="guide-list">
+            <li>소속 기관 또는 단체 이름</li>
+            <li>제안 내용 및 협업 방식 개요</li>
+            <li>기대하는 결과물 또는 목표</li>
+            <li>담당자 이름 및 연락처</li>
+            <li>관련 자료 링크 또는 파일 정보 (있는 경우)</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <article class="form-card reveal">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="inquiry_type" id="inquiry_type" value="bug" />
+          <div class="form-row">
+            <label for="name">이름</label>
+            <input id="name" name="name" type="text" placeholder="홍길동" required />
+          </div>
+          <div class="form-row">
+            <label for="email">이메일</label>
+            <input id="email" name="email" type="email" placeholder="name@example.com" required />
+          </div>
+          <div class="form-row">
+            <label for="message">내용</label>
+            <textarea id="message" name="message" placeholder="문의 내용을 입력해주세요." required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">보내기 →</button>
+        </form>
+
+        {% if submitted %}
+        <div class="alert">문의가 정상 접수되었습니다. 확인 후 빠르게 회신드리겠습니다.</div>
+        {% endif %}
+      </article>
+    </div>
   </div>
 </section>
 {% endblock %}

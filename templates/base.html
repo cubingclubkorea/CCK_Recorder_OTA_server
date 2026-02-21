@@ -4,30 +4,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CCK Recorder</title>
-    <meta
-      name="description"
-      content="CCK Recorder firmware distribution and guide platform"
-    />
+    <title>{% block title %}CCK Recorder{% endblock %}</title>
+    <meta name="description" content="CCK Recorder firmware distribution and guide platform" />
     <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon.svg' %}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/styles.css' %}?v=20260221" rel="stylesheet" />
   </head>
   <body>
-    <div class="site-bg">
-      <span class="blob blob-one"></span>
-      <span class="blob blob-two"></span>
-    </div>
-
     <header class="site-header">
       <div class="container nav-wrap">
         <a class="brand" href="/">
-          <img src="{% static 'assets/recorder_title.png' %}" alt="CCK Recorder" />
+          <img src="{% static 'assets/cck-recorder-white.png' %}" alt="CCK Recorder" />
         </a>
         <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
           <span></span><span></span><span></span>
