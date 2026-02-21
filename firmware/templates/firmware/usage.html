@@ -6,74 +6,115 @@
 <section class="page-top">
   <div class="container">
     <h1>How to Use</h1>
-    <p>현장 운영 기준으로 Recorder 사용 순서를 단계별로 정리했습니다.</p>
+    <p>역할에 따라 사용 가이드를 선택해주세요.</p>
   </div>
 </section>
 
 <section>
-  <div class="container usage-grid">
-    <article class="card usage-card reveal">
-      <span class="usage-step">1</span>
-      <h3>Wi-Fi Settings</h3>
-      <ul>
-        <li>Wi-Fi 미연결 시 `CCK_Recorder_X` AP가 활성화됩니다.</li>
-        <li>브라우저에서 `192.168.4.1`에 접속해 SSID/PW를 등록합니다.</li>
-      </ul>
-    </article>
+  <div class="container">
+    <div class="tabs reveal">
+      <button class="tab-btn active" type="button" data-tab-target="player">선수 가이드</button>
+      <button class="tab-btn" type="button" data-tab-target="judge">심판 가이드</button>
+    </div>
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">2</span>
-      <h3>Competition Settings</h3>
-      <ul>
-        <li>진행 가능한 경기 목록에서 버튼으로 모드를 선택합니다.</li>
-        <li>`OK`, `+2`, `DNF` 버튼으로 이동/선택을 제어합니다.</li>
-      </ul>
-    </article>
+    <!-- 선수 가이드 -->
+    <div class="tab-panel active" data-tab-panel="player">
+      <div class="usage-grid">
+        <article class="card usage-card reveal">
+          <span class="usage-step">1</span>
+          <h3>선수 등록</h3>
+          <ul>
+            <li>러너의 안내에 따라 좌석에 착석합니다.</li>
+            <li>카드 태그 후 화면에 표시되는 본인의 이름과 회차 정보를 확인합니다.</li>
+            <li>문제가 있을 경우 심판에게 말합니다.</li>
+          </ul>
+        </article>
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">3</span>
-      <h3>Judge Registration</h3>
-      <ul>
-        <li>`Wait for judge` 상태에서 심판 카드를 태깅합니다.</li>
-        <li>계정이 없는 경우 등록이 제한됩니다.</li>
-      </ul>
-    </article>
+        <article class="card usage-card reveal">
+          <span class="usage-step">2</span>
+          <h3>미리보기</h3>
+          <ul>
+            <li>미리보기를 할 준비가 되면 심판에게 준비되었다고 말합니다.</li>
+            <li>심판이 큐브 가리개를 들면 미리보기를 시작합니다.</li>
+            <li>미리보기를 모두 하였으면 스택매트를 손으로 눌러 타이머를 시작합니다.</li>
+            <li>미리보기 시간 15초가 지나면 +2 패널티, 17초가 지나면 DNF로 처리됩니다.</li>
+          </ul>
+        </article>
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">4</span>
-      <h3>Player Registration</h3>
-      <ul>
-        <li>`Wait for player` 상태에서 선수 카드를 태깅합니다.</li>
-        <li>`OK`로 Inspection 진입, `Reset`으로 등록 상태 복귀.</li>
-      </ul>
-    </article>
+        <article class="card usage-card reveal">
+          <span class="usage-step">3</span>
+          <h3>타이머 진행</h3>
+          <ul>
+            <li>타이머 시작과 함께 화면이 <code>Running</code> 상태로 전환됩니다.</li>
+            <li>솔빙 후 스택매트를 정지하면 기록이 자동으로 저장됩니다.</li>
+          </ul>
+        </article>
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">5</span>
-      <h3>Inspection / Running</h3>
-      <ul>
-        <li>Inspection 15초 초과 시 패널티, 17초 초과 시 DNF 처리됩니다.</li>
-        <li>타이머 시작과 함께 Running 상태로 자동 전환됩니다.</li>
-      </ul>
-    </article>
+        <article class="card usage-card reveal">
+          <span class="usage-step">4</span>
+          <h3>기록 확인 및 업로드</h3>
+          <ul>
+            <li>화면에 표시된 기록을 확인합니다.</li>
+            <li>기록 수정이 필요하면 심판에게 요청합니다.</li>
+            <li>Ao5 4회차 이후 BPA/WPA, 라운드 종료 시 평균 기록이 표시됩니다.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">6</span>
-      <h3>Record Adjustment</h3>
-      <ul>
-        <li>완료 후 `+2`, `DNF`, `Reset`으로 기록을 수정할 수 있습니다.</li>
-        <li>`OK`를 눌러 업로드 단계로 진행합니다.</li>
-      </ul>
-    </article>
+    <!-- 심판 가이드 -->
+    <div class="tab-panel" data-tab-panel="judge">
+      <div class="usage-grid">
 
-    <article class="card usage-card reveal">
-      <span class="usage-step">7</span>
-      <h3>Record Upload</h3>
-      <ul>
-        <li>선수 확인 태깅 후 기록 업로드를 확정합니다.</li>
-        <li>Ao5 4회차 이후 BPA/WPA, 라운드 종료 시 Single/Average를 표시합니다.</li>
-      </ul>
-    </article>
+        <article class="card usage-card reveal">
+          <span class="usage-step">1</span>
+          <h3>심판 등록</h3>
+          <ul>
+            <li>화면에 <code>Please tag card - Waiting judge</code> 문구가 표시될 때 본인 카드를 태깅합니다.</li>
+            <li>계정이 없거나 역할이 없는 경우 등록이 제한됩니다.</li>
+          </ul>
+        </article>
+
+        <article class="card usage-card reveal">
+          <span class="usage-step">2</span>
+          <h3>선수 등록</h3>
+          <ul>
+            <li>러너가 선수를 데리고 오면 선수 카드를 태깅합니다,</li>
+            <li>카드가 인식되면 기기 화면에 이름이 표시됩니다.</li>
+          </ul>
+        </article>
+
+        <article class="card usage-card reveal">
+          <span class="usage-step">3</span>
+          <h3>미리보기 및 기록 측정</h3>
+          <ul>
+            <li>선수가 준비되면 <code>OK</code> 버튼을 눌러 미리보기를 시작합니다.</li>
+            <li>Inspection 15초 초과 시 +2 패널티, 17초 초과 시 DNF로 자동 처리됩니다.</li>
+            <li>선수가 스택매트로 기록 측정을 시작하면 자동으로 기록이 동기화됩니다.</li>
+          </ul>
+        </article>
+
+        <article class="card usage-card reveal">
+          <span class="usage-step">4</span>
+          <h3>기록 확인</h3>
+          <ul>
+            <li>선수가 큐브 솔빙을 완료하면 큐브의 상태를 확인합니다</li>
+            <li>부여할 패널티가 있다면 <code>+2</code>, <code>DNF</code> 버튼으로 부여합니다.</li>
+            <li>패널티를 잘못 부여한 경우, <code>Reset</code> 버튼을 눌러 취소할 수 있습니다.</li>
+            <li>수정이 완료되면 <code>OK</code> 버튼을 눌러 업로드 단계로 진행합니다.</li>
+          </ul>
+        </article>
+
+        <article class="card usage-card reveal">
+          <span class="usage-step">5</span>
+          <h3>기록 업로드</h3>
+          <ul>
+            <li>선수 카드를 태깅하여 기록 업로드를 최종 확정합니다.</li>
+            <li>업로드 후 대기 상태로 전환됩니다.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
   </div>
 </section>
 {% endblock %}
