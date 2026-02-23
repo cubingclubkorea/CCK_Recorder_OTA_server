@@ -31,12 +31,14 @@ def usage(request):
     return render(request, 'firmware/usage.html')
 
 def contact(request): # 요청사항 3 (contact 데이터베이스 연동)
+    submitted = False
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
         Contact.objects.create(name=name, email=email, message=message)
-    return render(request, 'firmware/contact.html')
+        submitted = True
+    return render(request, 'firmware/contact.html', {'submitted': submitted})
 
 class DeviceTokenView(APIView):
     def post(self, request):
